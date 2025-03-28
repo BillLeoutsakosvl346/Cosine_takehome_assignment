@@ -1,0 +1,68 @@
+Base model: Llama-3.1-8B-Instruct evaluation on gsm8k test split
+--------------------------------------------------------------------------------------------------------------------------------
+
+FINAL RESULTS — 1319 examples
+Correct: 578 | Accuracy: 0.4382 (43.82%)
+Total elapsed time: 176.92s
+
+
+Procuded with this prompt:
+
+
+    f"""Solve this math problem. Provide your reasoning and put your answer after #### like that: '#### <your numeric answer>'.
+
+For example, if the question is:
+'If Alice has 3 apples and buys 2 more, how many apples does she have?'
+
+Your answer should be:
+Alice starts with 3 apples, then adds 2, giving 3 + 2 = 5 apples. #### 5
+
+Question: {ex['question']}
+"""
+    for ex in batch
+
+
+and max tokens = 256, temperture = 0.1
+----------------------------------------------------------------------------------------------------------------------------------
+
+==================================================================================================================================
+==================================================================================================================================
+==================================================================================================================================
+
+
+
+Fine-tuned model evaluation on gsm8k test split
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+FINAL RESULTS — 1319 examples
+Correct: 1057 | Accuracy: 0.8014 (80.14%)
+Total elapsed time: 182.21s
+
+
+Produced with this prompt:
+
+
+f"""Solve this math problem. Provide your reasoning between <think> and </think>, 
+and put your final answer between <answer> and </answer>. Also inside the <answer> tag, include your numeric answer after '####'.
+
+For example, if the question is:
+'If Alice has 3 apples and buys 2 more, how many apples does she have?'
+
+Your answer should be:
+<think>Alice starts with 3 apples, then adds 2, giving 3 + 2 = 5 apples.</think> <answer> Alice has 5 apples #### 5 </answer>
+
+Question: {ex['question']}
+"""
+
+
+max_new_tokens=256, temperature=0.1
+------------------------------------------------------------------------------------------------------------------------------------
+
+==================================================================================================================================
+==================================================================================================================================
+==================================================================================================================================
+
+Overall accuracy improvement: 36.32% with 1 epoch of training!!! (7 hours on an H200 gpu).
+
+Train / Eval split of dataset: 85% / 15% = 7473 / 1319 problems.
